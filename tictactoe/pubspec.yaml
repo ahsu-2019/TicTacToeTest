@@ -32,7 +32,9 @@ dependencies:
 
   #themeing for possible ui enhancements
   #button and background themeing
-  flutter_neumorphic: ^3.1.0
+  flutter_neumorphic:
+    git:
+      url: https://github.com/tsvillain/Flutter-Neumorphic.git
   flutter_icons: ^1.1.0
   #Allows for icon glow effect
   flutter_glow: ^0.2.0
