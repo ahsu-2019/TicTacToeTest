@@ -53,8 +53,8 @@ class playButtonState extends State<TicTacToe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("TicTacToe"),
+      appBar: neomorphicTheme.NeumorphicAppBar(
+        title: Text("Tic-Tac-Toe"),
       ),
       body: Container(
           padding: EdgeInsets.all(5),

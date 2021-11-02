@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart' as neomorphicTheme;
 
 //TicTacToe Game logic and Ui
 //Andrew Hsu 11/2/2021
@@ -35,7 +36,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     _gamePageState = this;
     return Scaffold(
-      appBar: AppBar(
+      appBar: neomorphicTheme.NeumorphicAppBar(
         title: Text('Tic-Tac-Toe'),
       ),
       body: Container(
@@ -48,6 +49,7 @@ class _GamePageState extends State<GamePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.lightBlue,
         onPressed: () {
           setState(() {
             awaitfn('Reset?', 'Want to reset the current game?', 'Go Back',
@@ -55,7 +57,7 @@ class _GamePageState extends State<GamePage> {
           });
         },
         tooltip: 'Restart',
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.refresh, color: Color(0xFFe6ebf2),),
       ),
     );
   }
@@ -70,7 +72,7 @@ class _BoxContainer extends StatelessWidget {
         width: 300,
         height: 300,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFe6ebf2),
           border: new Border.all(color: Colors.blue),
         ),
         child: Center(
@@ -165,11 +167,13 @@ class _StatusState extends State<Status> {
   @override
   Widget build(BuildContext context) {
     _turnState = this;
-    return Card(
+    return neomorphicTheme.Neumorphic(
+
         margin: EdgeInsets.all(40),
         child: Container(
           width: 220,
           height: 60,
+
           padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
           child: Text(
             _turn,
@@ -226,14 +230,14 @@ void awaitfnn() async {
             content: Text('Start a new Game?'),
             actions: <Widget>[
               RaisedButton(
-                color: Colors.white,
+                color: Color(0xFFe6ebf2),
                 child: Text('Exit'),
                 onPressed: () {
                   Navigator.of(_context).pop(false);
                 },
               ),
               RaisedButton(
-                color: Colors.white,
+                color: Color(0xFFe6ebf2),
                 child: Text('New Game'),
                 onPressed: () {
                   Navigator.of(_context).pop(true);
@@ -261,14 +265,14 @@ awaitfn(String title, String content, String btn1, String btn2) async {
             content: Text(content),
             actions: <Widget>[
               RaisedButton(
-                color: Colors.white,
+                color: Color(0xFFe6ebf2),
                 child: Text(btn1),
                 onPressed: () {
                   Navigator.of(_context).pop(false);
                 },
               ),
               RaisedButton(
-                color: Colors.white,
+                color: Color(0xFFe6ebf2),
                 child: Text(btn2),
                 onPressed: () {
                   Navigator.of(_context).pop(true);
