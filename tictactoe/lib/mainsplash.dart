@@ -38,7 +38,6 @@ class MainSplash extends StatelessWidget {
                           }));
                         },
                       ),
-
                 ),
               )
             ],

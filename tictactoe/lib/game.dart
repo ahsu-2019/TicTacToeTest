@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 //TicTacToe Game logic and Ui
 //Andrew Hsu 11/2/2021
 
@@ -14,17 +15,21 @@ String _turn = 'Your Turn';
 bool loading = false;
 bool vsBot = true;
 
+//init game Ui and start bot function
 class GamePage extends StatefulWidget {
   bool isBot;
+
   GamePage(this.isBot) {
     _resetGame();
     vsBot = this.isBot;
     if (vsBot) _turn = 'Your Turn';
   }
+
   @override
   _GamePageState createState() => _GamePageState();
 }
 
+//Game state function/main controller
 class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
@@ -56,6 +61,7 @@ class _GamePageState extends State<GamePage> {
   }
 }
 
+//Tic-Tac-Toe grid itself
 class _BoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -64,9 +70,9 @@ class _BoxContainer extends StatelessWidget {
         width: 300,
         height: 300,
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: new Border.all(color: Colors.blue),
-         ),
+          color: Colors.white,
+          border: new Border.all(color: Colors.blue),
+        ),
         child: Center(
             child: GridView.count(
           primary: false,
@@ -78,13 +84,17 @@ class _BoxContainer extends StatelessWidget {
   }
 }
 
+//init dialog box Ui
 class Box extends StatefulWidget {
   final int index;
+
   Box(this.index);
+
   @override
   _BoxState createState() => _BoxState();
 }
 
+//calling appropriate game alert dialog
 class _BoxState extends State<Box> {
   void pressed() {
     print(currentMoves);
@@ -144,11 +154,13 @@ class _BoxState extends State<Box> {
   }
 }
 
+//turn display text Ui
 class Status extends StatefulWidget {
   @override
   _StatusState createState() => _StatusState();
 }
 
+//turn display text State
 class _StatusState extends State<Status> {
   @override
   Widget build(BuildContext context) {
@@ -168,9 +180,8 @@ class _StatusState extends State<Status> {
   }
 }
 
-//This is ingame logic for checking game winner
+//This is ingame logic for checking game winner after every move
 //Andrew Hsu 11/2/21
-
 bool _checkGame() {
   for (int i = 0; i < 9; i += 3) {
     if (_board[i] != '' &&
@@ -204,33 +215,34 @@ void _resetGame() {
   _turn = 'Your Turn';
   loading = false;
 }
+
 //Alert user of winner via alert dialog function
 void awaitfnn() async {
   bool? result = await showDialog<bool>(
       context: _context,
       barrierDismissible: false,
       builder: (BuildContext _context) => AlertDialog(
-        title: Text('$winner won!'.toUpperCase()),
-        content: Text('Start a new Game?'),
-        actions: <Widget>[
-          RaisedButton(
-            color: Colors.white,
-            child: Text('Exit'),
-            onPressed: () {
-              Navigator.of(_context).pop(false);
-            },
-          ),
-          RaisedButton(
-            color: Colors.white,
-            child: Text('New Game'),
-            onPressed: () {
-              Navigator.of(_context).pop(true);
-            },
-          )
-        ],
-      ));
+            title: Text('$winner won!'.toUpperCase()),
+            content: Text('Start a new Game?'),
+            actions: <Widget>[
+              RaisedButton(
+                color: Colors.white,
+                child: Text('Exit'),
+                onPressed: () {
+                  Navigator.of(_context).pop(false);
+                },
+              ),
+              RaisedButton(
+                color: Colors.white,
+                child: Text('New Game'),
+                onPressed: () {
+                  Navigator.of(_context).pop(true);
+                },
+              )
+            ],
+          ));
 
-  if (result!=null && result ==true) {
+  if (result != null && result == true) {
     _gamePageState.setState(() {
       _resetGame();
     });
@@ -245,35 +257,34 @@ awaitfn(String title, String content, String btn1, String btn2) async {
       context: _context,
       barrierDismissible: false,
       builder: (BuildContext _context) => AlertDialog(
-        title: Text(title.toUpperCase()),
-        content: Text(content),
-        actions: <Widget>[
-          RaisedButton(
-            color: Colors.white,
-            child: Text(btn1),
-            onPressed: () {
-              Navigator.of(_context).pop(false);
-            },
-          ),
-          RaisedButton(
-            color: Colors.white,
-            child: Text(btn2),
-            onPressed: () {
-              Navigator.of(_context).pop(true);
-            },
-          )
-        ],
-      ));
+            title: Text(title.toUpperCase()),
+            content: Text(content),
+            actions: <Widget>[
+              RaisedButton(
+                color: Colors.white,
+                child: Text(btn1),
+                onPressed: () {
+                  Navigator.of(_context).pop(false);
+                },
+              ),
+              RaisedButton(
+                color: Colors.white,
+                child: Text(btn2),
+                onPressed: () {
+                  Navigator.of(_context).pop(true);
+                },
+              )
+            ],
+          ));
 
-
-  if (result!=null && result ==true) {
+  if (result != null && result == true) {
     _gamePageState.setState(() {
       _resetGame();
     });
   }
 }
 
-//Minimax logic for bot moves
+//Part of Minimax logic for bot moves
 int max(int a, int b) {
   return a > b ? a : b;
 }
@@ -291,7 +302,8 @@ bool isMovesLeft(List<String> _board) {
   }
   return false;
 }
-//Function to eval if board has winner
+
+//Function to eval if board has winner for bot use
 int _eval(List<String> _board) {
   for (int i = 0; i < 9; i += 3) {
     if (_board[i] != '' &&
@@ -316,9 +328,9 @@ int _eval(List<String> _board) {
   }
   return 0;
 }
+
 //Minimax logic function
 int minmax(List<String> _board, int depth, bool isMax) {
-
   int score = _eval(_board);
   //print(score);
   int best = 0, i;
@@ -348,14 +360,13 @@ int minmax(List<String> _board, int depth, bool isMax) {
     return best;
   }
 }
+
 //Function to determine best move for bot
 Future<int> _bestMove(List<String> _board) async {
-
   int bestMove = -1000, moveVal;
   await Future.delayed(Duration(seconds: 1), () {
-
     int i;
-    int bi=0;
+    int bi = 0;
     for (i = 0; i < 9; i++) {
       if (_board[i] == '') {
         moveVal = -1000;
@@ -372,7 +383,6 @@ Future<int> _bestMove(List<String> _board) async {
     _gamePageState.setState(() {});
     loading = false;
     _turnState.setState(() {
-
       _turn = 'Your Turn';
 
       currentMoves++;
