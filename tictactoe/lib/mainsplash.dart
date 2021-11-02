@@ -24,7 +24,6 @@ class MainSplash extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(10, 5, 10, 6),
                         child: Container(
                             width: 100,
-
                             child: Center(
                               child: Text(
                                 'Start New Game',

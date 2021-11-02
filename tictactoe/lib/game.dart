@@ -274,7 +274,6 @@ awaitfn(String title, String content, String btn1, String btn2) async {
 }
 
 //Minimax logic for bot moves
-
 int max(int a, int b) {
   return a > b ? a : b;
 }
@@ -284,7 +283,7 @@ int min(int a, int b) {
 }
 
 String player = 'x', opponent = 'o';
-
+//function to eval if there are any possible moves left in the game
 bool isMovesLeft(List<String> _board) {
   int i;
   for (i = 0; i < 9; i++) {
@@ -292,7 +291,7 @@ bool isMovesLeft(List<String> _board) {
   }
   return false;
 }
-
+//Function to eval if board has winner
 int _eval(List<String> _board) {
   for (int i = 0; i < 9; i += 3) {
     if (_board[i] != '' &&
@@ -317,7 +316,7 @@ int _eval(List<String> _board) {
   }
   return 0;
 }
-
+//Minimax logic function
 int minmax(List<String> _board, int depth, bool isMax) {
 
   int score = _eval(_board);
@@ -349,7 +348,7 @@ int minmax(List<String> _board, int depth, bool isMax) {
     return best;
   }
 }
-
+//Function to determine best move for bot
 Future<int> _bestMove(List<String> _board) async {
 
   int bestMove = -1000, moveVal;
